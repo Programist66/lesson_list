@@ -1,26 +1,34 @@
 ﻿#include <iostream>
+#include <string>
 
 using namespace std;
 
+template <typename T>
 class ListNode 
 {
     public:
-        int value;
-        ListNode* next;
-        ListNode(int val) : value(val), next(nullptr) {}
+        T value;
+        ListNode<T>* next;
+        ListNode(T val) : value(val), next(nullptr) {}
+        friend ostream& operator<<(ostream& out, const ListNode& el)
+        {
+            out << to_string(el.value);
+            return out;
+        }
 };
 
+template <typename T>
 class List 
 {
     private:
-        ListNode* head;
+        ListNode<T>* head;
 
     public:
         List() : head(nullptr) {}
         
-        ListNode* search(int value)
+        ListNode<T>* search(T value)
         {
-            ListNode* current = head;
+            ListNode<T>* current = head;
             while (current) 
             {
                 if (current->value == value) 
@@ -32,35 +40,42 @@ class List
             return nullptr;
         }
 
-        void Preapend(int value) 
+        void Preapend(T value) 
         {
-            ListNode* new_node = new ListNode(value);
+            ListNode<T>* new_node = new ListNode<T>(value);
             new_node->next = head;
             head = new_node;
         }
 
-        ListNode* findPrevious(int value) 
+        ListNode<T>* findPrevious(T value) 
         {
-            ListNode* current = head;
-            ListNode* previous = nullptr;
+            ListNode<T>* current = head;
+            ListNode<T>* previous = nullptr;
 
             while (current != nullptr) 
             {
                 if (current->value == value) 
                 {
-                    return previous;
+                    if (current == head)
+                    {
+                        return head;
+                    }
+                    else
+                    {
+                        return previous;
+                    }                    
                 }
                 previous = current;
                 current = current->next;
             }
 
-            return nullptr; // Возвращаем nullptr, если значение не найдено
+            return nullptr; 
         }
 
         friend ostream& operator<<(ostream& out, const List& el)
         {
             out << "[";
-            ListNode* current = el.head;
+            ListNode<T>* current = el.head;
             while (current) 
             {
                 out << current->value;
@@ -76,11 +91,11 @@ class List
 };
 
 int main() {
-    List my_list;
+    List<int> my_list;
     my_list.Preapend(5);
     my_list.Preapend(8);
     my_list.Preapend(9);
     cout << my_list;
-    cout << my_list.findPrevious(8);
+    cout << (*my_list.findPrevious(9));
     return 0;
 }
