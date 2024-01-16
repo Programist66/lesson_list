@@ -72,6 +72,31 @@ class List
             return nullptr; 
         }
 
+        void remove(T value) 
+        {
+            if (head && head->value == value) 
+            {
+                ListNode<T>* temp = head;
+                head = head->next;
+                delete temp;
+            }
+            else 
+            {
+                ListNode<T>* current = head;
+                while (current && current->next) 
+                {
+                    if (current->next->value == value) 
+                    {
+                        ListNode<T>* temp = current->next;
+                        current->next = current->next->next;
+                        delete temp;
+                        return;
+                    }
+                    current = current->next;
+                }
+            }
+        }
+
         friend ostream& operator<<(ostream& out, const List& el)
         {
             out << "[";
@@ -85,7 +110,7 @@ class List
                 }
                 current = current->next;
             }
-            out << "]\n";
+            out << "]";
             return out;
         }
 };
@@ -95,7 +120,10 @@ int main() {
     my_list.Preapend(5);
     my_list.Preapend(8);
     my_list.Preapend(9);
-    cout << my_list;
-    cout << (*my_list.findPrevious(9));
+    cout << my_list << endl;
+    cout << (*my_list.findPrevious(5)) << endl;
+    my_list.remove(9);
+    cout << my_list << endl;
+    cout << (*my_list.findPrevious(8)) << endl;
     return 0;
 }
