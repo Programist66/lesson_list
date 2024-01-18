@@ -78,7 +78,6 @@ class List
             {
                 ListNode<T>* temp = head;
                 head = head->next;
-                delete temp;
             }
             else 
             {
@@ -89,11 +88,23 @@ class List
                     {
                         ListNode<T>* temp = current->next;
                         current->next = current->next->next;
-                        delete temp;
                         return;
                     }
                     current = current->next;
                 }
+            }
+            temp->next = nullptr;
+            delete temp;
+        }
+
+        ~List()
+        {
+            ListNode<T> next = this -> next;
+            while (next != nullptr)
+            {
+                ListNode<T> temp = next->next;
+                delete next;
+                next = temp;
             }
         }
 
