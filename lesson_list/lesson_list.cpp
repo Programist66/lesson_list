@@ -74,7 +74,7 @@ class List
 
         void remove(T value) 
         {
-            ListNode<T>* temp
+            ListNode<T>* temp = nullptr;
             if (head && head->value == value) 
             {
                 temp = head;
@@ -100,12 +100,12 @@ class List
 
         ~List()
         {
-            ListNode<T> next = this -> next;
-            while (next != nullptr)
+            ListNode<T>* curent = head;
+            while (curent != nullptr)
             {
-                ListNode<T> temp = next->next;
-                delete next;
-                next = temp;
+                ListNode<T>* temp = curent -> next;
+                delete curent;
+                curent = temp;
             }
         }
 
