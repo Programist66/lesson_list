@@ -74,9 +74,10 @@ class List
 
         void remove(T value) 
         {
+            ListNode<T>* temp
             if (head && head->value == value) 
             {
-                ListNode<T>* temp = head;
+                temp = head;
                 head = head->next;
             }
             else 
@@ -86,7 +87,7 @@ class List
                 {
                     if (current->next->value == value) 
                     {
-                        ListNode<T>* temp = current->next;
+                        temp = current->next;
                         current->next = current->next->next;
                         return;
                     }
